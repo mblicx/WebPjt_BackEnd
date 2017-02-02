@@ -27,7 +27,7 @@ module.exports = {
 
     create(username, email, alliance) {
         return DB.query(
-            'insert into users(name,email,alliance) values(${userName},${mail},${alliance_id}) returning *',
+            'insert into users(name,email,alliance_id) values(${userName},${mail},${alliance_id}) returning *',
             {
                 userName: username,
                 mail: email,
