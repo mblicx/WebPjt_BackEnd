@@ -25,12 +25,13 @@ module.exports = {
             })
     },
 
-    create(username, email) {
+    create(username, email, alliance) {
         return DB.query(
-            'insert into users(name,email) values(${userName},${mail}) returning *',
+            'insert into users(name,email,alliance) values(${userName},${mail},${alliance_id}) returning *',
             {
                 userName: username,
-                mail: email
+                mail: email,
+                alliance_id:alliance
             })
             .then((result) => {
                 return result;

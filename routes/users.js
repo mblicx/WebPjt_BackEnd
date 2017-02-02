@@ -26,6 +26,7 @@ router.get('/:id', function (req, res, next) {
 router.post('/', function (req, res, next) {
   var username = req.body.username;
   var email = req.body.email;
+  var alliance = req.body.alliance;
   if (username === undefined) {
     res.status(422)
       .json({
@@ -33,7 +34,7 @@ router.post('/', function (req, res, next) {
         message: 'Missing parameter(s)'
       });
   }
-  UserDAO.create(username, email)
+  UserDAO.create(username, email, alliance)
     .then((result) => {
       res.status(200)
         .json({
