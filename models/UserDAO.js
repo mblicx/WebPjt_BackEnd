@@ -31,7 +31,7 @@ module.exports = {
             {
                 userName: username,
                 mail: email,
-                alliance_id:alliance
+                alliance_id: alliance
             })
             .then((result) => {
                 return result;
@@ -49,19 +49,20 @@ module.exports = {
             .then((result) => {
                 if (result.length === 0) {
                     throw 'USER NOT_FOUND';
-                    DB.query(
-                        'delete from users where id = ${userID}',
-                        { userID: id }
-                    )
-                        .then((result) => {
-                            if (result.length === 0) {
-                                return 'Delete Success!';
-                            }
-                        })
-                        .catch((error) => {
-                            throw error;
-                        })
                 }
+                DB.query(
+                    'delete from users where id = ${userID}',
+                    { userID: id }
+                )
+                    .then((result) => {
+                        if (result.length === 0) {
+                            return 'Delete Success!';
+                        }
+                    })
+                    .catch((error) => {
+                        throw error;
+                    })
+
             })
     },
 
@@ -73,23 +74,22 @@ module.exports = {
             .then((result) => {
                 if (result.length === 0) {
                     throw 'USER NOT_FOUND';
-                    DB.query(
-                        'update users set name=${userName},email=${mail},alliance_id=${userAlliance} where id=${userID}',
-                        {
-                            userID: id,
-                            userName: username,
-                            mail: email,
-                            userAlliance: alliance
-                        })
-                        .then((result) => {
-                            return 'Update Success!';
-                        })
-                        .catch((error) => {
-                            throw error;
-                        })
                 }
+                DB.query(
+                    'update users set name=${userName},email=${mail},alliance_id=${userAlliance} where id=${userID}',
+                    {
+                        userID: id,
+                        userName: username,
+                        mail: email,
+                        userAlliance: alliance
+                    })
+                    .then((result) => {
+                        return 'Update Success!';
+                    })
+                    .catch((error) => {
+                        throw error;
+                    })
+
             })
-
-
     }
 };

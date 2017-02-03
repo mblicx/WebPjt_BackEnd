@@ -37,9 +37,56 @@ module.exports = {
             .catch((error) => {
                 throw error;
             })
+    },
 
+    deleteById(id) {
+        return DB.query(
+            'select * from alliances where id = ${allianceID}',
+            { allianceID: id }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'ALLIANCE NOT_FOUND';
+                }
+                DB.query(
+                    'delete from alliances where id = ${allianceID}',
+                    { allianceID: id }
+                )
+                    .then((result) => {
+                        if (result.length === 0) {
+                            return 'Delete Success!';
+                        }
+                    })
+                    .catch((error) => {
+                        throw error;
+                    })
+
+            })
+    },
+
+    updateById(id, name) {
+        return DB.query(
+            'select * from alliances where id = ${allianceID}',
+            { allianceID: id }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'ALLIANCE NOT_FOUND';
+                }
+                DB.query(
+                    'update alliances set name=${allianceName} where id=${allianceID}',
+                    {
+                        allianceID: id,
+                        allianceName: name
+                    })
+                    .then((result) => {
+                        return 'Update Success!';
+                    })
+                    .catch((error) => {
+                        throw error;
+                    })
+            })
     }
-
 
 
 };
