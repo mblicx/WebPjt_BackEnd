@@ -4,20 +4,40 @@ const CharacterDAO = require('../models/CharacterDAO')
 
 router.get('/', function (req, res, next) {
   CharacterDAO.getAll()
-    .then((users) => {
-      res.send(users);
+    .then((result) => {
+      res.send(result);
     })
 });
 
-router.get('/:id', function (req, res, next) {
-  var id = parseInt(req.params.id);
-  CharacterDAO.getById(id)
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((error) =>
-      res.send(error))
+router.get('/:param', function (req, res, next) {
+  var chaclass = req.params.param;
+  var id = parseInt(req.params.param);
+  if ((chaclass.charAt(0) === '{' )&& (chaclass.charAt(chaclass.length - 1) === '}')) {
+    var subclass = chaclass.substring(1, chaclass.length - 1);
+    CharacterDAO.getByClass(subclass)
+      .then((result) => {
+        if (result.length === 0) {
+          res.status(200)
+            .json({
+              result: 'no result/We can not find anyone in this class'
+            })
+        }
+        res.send(result);
+      })
+      .catch((error) =>
+        res.status(error))
+  }
+  else {
+    CharacterDAO.getById(id)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((error) =>
+        res.send(error))
+  }
+
 });
+
 
 router.post('/', function (req, res, next) {
   var name = req.body.name;

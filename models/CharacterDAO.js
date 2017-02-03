@@ -26,6 +26,22 @@ module.exports = {
             })
     },
 
+    getByClass(chaclass){
+        return DB.query(
+            'select * from characters where class = ${characterClass}',
+            {
+                characterClass:chaclass
+            }
+        )
+        .then((result)=>{
+            return result;
+        })
+        .catch((error)=>{
+            throw error;
+        })
+
+    },
+
     create(name, chaclass, user_id, point) {
         return DB.query(
             'INSERT INTO characters(name,class,user_id,position) VALUES(${Name},${Class},${User_id},${Position}) RETURNING *',
