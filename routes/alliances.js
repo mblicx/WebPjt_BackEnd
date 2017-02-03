@@ -27,6 +27,27 @@ router.get('/:id/users', function (req, res, next) {
     .catch((error) =>
       res.send(error))
 });
+router.get('/:id/characters', function (req, res, next) {
+  var id = parseInt(req.params.id);
+  AllianceDAO.getCharactersById(id)
+    .then((alliance) => {
+      res.send(alliance);
+    })
+    .catch((error) =>
+      res.send(error))
+});
+
+router.get('/:id/characters/:class', function (req, res, next) {
+  var id = parseInt(req.params.id);
+  var chaclass = req.params.class;
+  var subclass = chaclass.substring(1, chaclass.length - 1);
+  AllianceDAO.getCharactersByIdAndClass(id, subclass)
+    .then((alliance) => {
+      res.send(alliance);
+    })
+    .catch((error) =>
+      res.send(error))
+});
 
 router.post('/', function (req, res, next) {
   var alliancename = req.body.name;
@@ -79,5 +100,6 @@ router.put('/:id', function (req, res, next) {
         })
     })
 });
+
 
 module.exports = router;

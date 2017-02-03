@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 router.get('/:param', function (req, res, next) {
   var chaclass = req.params.param;
   var id = parseInt(req.params.param);
-  if ((chaclass.charAt(0) === '{' )&& (chaclass.charAt(chaclass.length - 1) === '}')) {
+  if ((chaclass.charAt(0) === '{') && (chaclass.charAt(chaclass.length - 1) === '}')) {
     var subclass = chaclass.substring(1, chaclass.length - 1);
     CharacterDAO.getByClass(subclass)
       .then((result) => {
@@ -36,6 +36,46 @@ router.get('/:param', function (req, res, next) {
         res.send(error))
   }
 
+});
+
+router.get('/:id/allies/:radius', function (req, res, next) {
+
+  var id = parseInt(req.params.id);
+  var radius = req.params.radius;
+  var subrad = parseInt(radius.substring(1, radius.length - 1));
+
+  CharacterDAO.getInDistenceAlliance(id, subrad)
+    .then((result) => {
+      if (result.length === 0) {
+        res.status(200)
+          .json({
+            result: 'Nobody in distence'
+          })
+      }
+      res.send(result);
+    })
+    .catch((error) =>
+      res.send(error))
+});
+
+router.get('/:id/ennemies/:radius', function (req, res, next) {
+
+  var id = parseInt(req.params.id);
+  var radius = req.params.radius;
+  var subrad = parseInt(radius.substring(1, radius.length - 1));
+
+  CharacterDAO.getInDistenceEnnemies(id, subrad)
+    .then((result) => {
+      if (result.length === 0) {
+        res.status(200)
+          .json({
+            result: 'Nobody in distence'
+          })
+      }
+      res.send(result);
+    })
+    .catch((error) =>
+      res.send(error))
 });
 
 

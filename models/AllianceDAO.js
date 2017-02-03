@@ -26,7 +26,33 @@ module.exports = {
                 return result;
             })
     },
-
+    getCharactersById(id) {
+        return DB.query(
+            'SELECT * FROM users cross join characters WHERE users.id = characters.user_id and alliance_id = ${allianceID}',
+            { allianceID: id }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'ALLIANCE NOT_FOUND';
+                }
+                return result;
+            })
+    },
+    getCharactersByIdAndClass(id, chaclass) {
+        return DB.query(
+            'SELECT * FROM users cross join characters WHERE users.id = characters.user_id and alliance_id = ${allianceID} and  class = ${Chaclass}',
+            {
+                allianceID: id,
+                Chaclass: chaclass
+            }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'ALLIANCE NOT_FOUND';
+                }
+                return result;
+            })
+    },
     getAll() {
         return DB.query('SELECT * FROM alliances')
             .then((result) => {

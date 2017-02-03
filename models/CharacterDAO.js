@@ -26,22 +26,86 @@ module.exports = {
             })
     },
 
-    getByClass(chaclass){
+    getByClass(chaclass) {
         return DB.query(
             'select * from characters where class = ${characterClass}',
             {
-                characterClass:chaclass
+                characterClass: chaclass
             }
         )
-        .then((result)=>{
-            return result;
-        })
-        .catch((error)=>{
-            throw error;
-        })
+            .then((result) => {
+                return result;
+            })
+            .catch((error) => {
+                throw error;
+            })
 
     },
 
+// result 获取 坐标进行计算
+    getInDistenceEnnemies(id, subrad) {
+        var x = 0;
+        var y = 0;
+        DB.query(
+            'select position from characters where id = ${charId};',
+            {
+                charId: id
+            }
+        )
+            .then((result) => {
+                //x = ;
+                console.log(result[0]);
+            })
+            .catch((error) => {
+                throw error;
+            })
+
+        return DB.query(
+            'select characters.*,alliance_id from characters cross join users where characters.user_id=users.id and alliance_id <> (select users.alliance_id from characters cross join users where characters.user_id = users.id and characters.id =  ${charId});',
+            {
+                charId: id
+            }
+        )
+            .then((result) => {
+                return result;
+            })
+            .catch((error) => {
+                throw error;
+            })
+
+    },
+// result 获取 坐标进行计算
+    getInDistenceAlliance(id, subrad) {
+        var x = 0;
+        var y = 0;
+        DB.query(
+            'select position from characters where id = ${charId};',
+            {
+                charId: id
+            }
+        )
+            .then((result) => {
+                //x = ;
+                console.log(result[0]);
+            })
+            .catch((error) => {
+                throw error;
+            })
+
+        return DB.query(
+            'select characters.*,alliance_id from characters cross join users where characters.user_id=users.id and characters.id <> ${charId} and alliance_id= (select users.alliance_id from characters cross join users where characters.user_id = users.id and characters.id = ${charId});',
+            {
+                charId: id
+            }
+        )
+            .then((result) => {
+                return result;
+            })
+            .catch((error) => {
+                throw error;
+            })
+
+    },
     create(name, chaclass, user_id, point) {
         return DB.query(
             'INSERT INTO characters(name,class,user_id,position) VALUES(${Name},${Class},${User_id},${Position}) RETURNING *',
