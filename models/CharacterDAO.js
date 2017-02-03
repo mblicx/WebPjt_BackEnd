@@ -28,14 +28,12 @@ module.exports = {
 
     create(name, chaclass, user_id, point) {
         return DB.query(
-            'INSERT INTO characters(name,class,user_id) VALUES(${Name},${Class},${User_id}) RETURNING *',
+            'INSERT INTO characters(name,class,user_id,position) VALUES(${Name},${Class},${User_id},${Position}) RETURNING *',
             {
                 Name: name,
                 Class: chaclass,
-                User_id: user_id
-                //Position: point
-
-
+                User_id: user_id,
+                Position: point
             })
             .then((result) => {
                 return result;
@@ -79,13 +77,13 @@ module.exports = {
                     throw 'CHARACTER NOT_FOUND';
                 }
                 DB.query(
-                    'update characters set name=${characterName}, user_id=${userID},class=${cclass} where id=${characterID}',
+                    'update characters set name=${characterName}, user_id=${userID},class=${cclass},position=${point} where id=${characterID}',
                     {
                         characterID: id,
                         characterName: name,
                         userID: user_id,
-                        cclass: chaclass
-                        //point: position
+                        cclass: chaclass,
+                        point: position
                     })
                     .then((result) => {
                         return 'Update Success!';
