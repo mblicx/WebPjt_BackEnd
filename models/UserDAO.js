@@ -24,7 +24,17 @@ module.exports = {
                 throw error;
             })
     },
-
+    
+    getCharacters(id){
+	return DB.query(
+		'SELECT * from characters WHERE user_id = ${userID}',
+		{userID:id}
+	)
+	.then((result)=>{
+		return result;
+	})
+    },
+    
     create(username, email, alliance) {
         return DB.query(
             'insert into users(name,email,alliance_id) values(${userName},${mail},${alliance_id}) returning *',

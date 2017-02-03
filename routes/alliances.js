@@ -18,7 +18,15 @@ router.get('/:id', function (req, res, next) {
     .catch((error) =>
       res.send(error))
 });
-
+router.get('/:id/users', function (req, res, next) {
+  var id = parseInt(req.params.id);
+  AllianceDAO.getUsersById(id)
+    .then((alliance) => {
+      res.send(alliance);
+    })
+    .catch((error) =>
+      res.send(error))
+});
 
 router.post('/', function (req, res, next) {
   var alliancename = req.body.name;
@@ -71,6 +79,5 @@ router.put('/:id', function (req, res, next) {
         })
     })
 });
-
 
 module.exports = router;

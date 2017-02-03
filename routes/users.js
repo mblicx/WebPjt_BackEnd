@@ -23,6 +23,14 @@ router.get('/:id', function (req, res, next) {
     })
 });
 
+router.get('/:id/characters', function (req, res, next) {
+  var id = parseInt(req.params.id);
+  UserDAO.getCharacters(id)
+    .then((user) => {
+      res.send(user);
+    })
+});
+
 router.post('/', function (req, res, next) {
   var username = req.body.username;
   var email = req.body.email;
@@ -78,8 +86,5 @@ router.put('/:id', function (req, res, next) {
         })
     })
 });
-
-
-
 
 module.exports = router;

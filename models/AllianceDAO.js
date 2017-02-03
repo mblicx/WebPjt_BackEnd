@@ -14,7 +14,18 @@ module.exports = {
                 return result[0]
             })
     },
-
+    getUsersById(id) {
+        return DB.query(
+            'SELECT * FROM users WHERE alliance_id = ${allianceID}',
+            { allianceID: id }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'ALLIANCE NOT_FOUND';
+                }
+                return result;
+            })
+    },
 
     getAll() {
         return DB.query('SELECT * FROM alliances')
