@@ -41,41 +41,59 @@ router.get('/:param', function (req, res, next) {
 router.get('/:id/allies/:radius', function (req, res, next) {
 
   var id = parseInt(req.params.id);
-  var radius = req.params.radius;
-  var subrad = parseInt(radius.substring(1, radius.length - 1));
+  var radius = parseInt(req.params.radius);
 
-  CharacterDAO.getInDistenceAlliance(id, subrad)
+  CharacterDAO.getInDistenceAlliance(id, radius)
     .then((result) => {
       if (result.length === 0) {
         res.status(200)
           .json({
+            status: 'success',
             result: 'Nobody in distence'
           })
       }
-      res.send(result);
+      res.status(200)
+        .json({
+          status: 'success',
+          characters: result
+        })
     })
     .catch((error) =>
-      res.send(error))
+      res.status(500)
+        .json({
+          status: 'Error',
+          message: error
+        })
+    )
 });
 
 router.get('/:id/ennemies/:radius', function (req, res, next) {
 
   var id = parseInt(req.params.id);
-  var radius = req.params.radius;
-  var subrad = parseInt(radius.substring(1, radius.length - 1));
+  var radius = parseInt(req.params.radius);
 
-  CharacterDAO.getInDistenceEnnemies(id, subrad)
+  CharacterDAO.getInDistenceEnnemies(id, radius)
     .then((result) => {
       if (result.length === 0) {
         res.status(200)
           .json({
+            status: 'success',
             result: 'Nobody in distence'
           })
       }
-      res.send(result);
+      res.status(200)
+        .json({
+          status: 'success',
+          characters: result
+        })
     })
     .catch((error) =>
-      res.send(error))
+      res.status(500)
+        .json({
+          status: 'Error',
+          message: error
+        })
+    )
 });
 
 
