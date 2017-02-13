@@ -2,7 +2,7 @@ const DB = require('../models/Database');
 
 module.exports = {
     getById(id) {
-        return DB.query(
+        return DB.accessor.query(
             'select * from users where id = ${userID}',
             { userID: id }
         )
@@ -16,7 +16,7 @@ module.exports = {
     },
 
     getAll() {
-        return DB.query('select * from users')
+        return DB.accessor.query('select * from users')
             .then((result) => {
                 return result;
             })
@@ -24,19 +24,19 @@ module.exports = {
                 throw error;
             })
     },
-    
-    getCharacters(id){
-	return DB.query(
-		'SELECT * from characters WHERE user_id = ${userID}',
-		{userID:id}
-	)
-	.then((result)=>{
-		return result;
-	})
+
+    getCharacters(id) {
+        return DB.accessor.query(
+            'SELECT * from characters WHERE user_id = ${userID}',
+            { userID: id }
+        )
+            .then((result) => {
+                return result;
+            })
     },
-    
+
     create(username, email, alliance) {
-        return DB.query(
+        return DB.accessor.query(
             'insert into users(name,email,alliance_id) values(${userName},${mail},${alliance_id}) returning *',
             {
                 userName: username,
@@ -44,7 +44,7 @@ module.exports = {
                 alliance_id: alliance
             })
             .then((result) => {
-                return result;
+                return result[0];
             })
             .catch((error) => {
                 throw error;
@@ -52,41 +52,22 @@ module.exports = {
     },
 
     deleteById(id) {
-        return DB.query(
-            'select * from users where id = ${userID}',
+
+        return DB.accessor.query(
+            'delete from users where id = ${userID}',
             { userID: id }
         )
             .then((result) => {
-                if (result.length === 0) {
-                    throw 'USER NOT_FOUND';
-                }
-                DB.query(
-                    'delete from users where id = ${userID}',
-                    { userID: id }
-                )
-                    .then((result) => {
-                        if (result.length === 0) {
-                            return 'Delete Success!';
-                        }
-                    })
-                    .catch((error) => {
-                        throw error;
-                    })
-
+                return result;
+            })
+            .catch((error) => {
+                throw error;
             })
     },
 
     updateById(id, username, email, alliance) {
-        return DB.query(
-            'select * from users where id = ${userID}',
-            { userID: id }
-        )
-            .then((result) => {
-                if (result.length === 0) {
-                    throw 'USER NOT_FOUND';
-                }
-                DB.query(
-                    'update users set name=${userName},email=${mail},alliance_id=${userAlliance} where id=${userID}',
+           return DB.accessor.query(
+                    'update users set name=${userName},email=${mail},alliance_id=${userAlliance} where id=${userID};select * from users where id = ${userID}',
                     {
                         userID: id,
                         userName: username,
@@ -94,12 +75,12 @@ module.exports = {
                         userAlliance: alliance
                     })
                     .then((result) => {
-                        return 'Update Success!';
+                        return result;
                     })
                     .catch((error) => {
                         throw error;
                     })
 
-            })
+            
     }
 };

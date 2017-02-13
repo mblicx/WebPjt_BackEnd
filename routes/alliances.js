@@ -5,52 +5,99 @@ const AllianceDAO = require('../models/AllianceDAO');
 router.get('/', function (req, res, next) {
   AllianceDAO.getAll()
     .then((alliances) => {
-      res.send(alliances);
+      //res.send(alliances);
+
+      res.status(200)
+        .json({
+          status: 'success',
+          alliances: alliances
+        });
+
     })
 });
 
 router.get('/:id', function (req, res, next) {
   var id = parseInt(req.params.id);
   AllianceDAO.getById(id)
-    .then((alliance) => {
-      res.send(alliance);
+    .then((alliances) => {
+      //res.send(alliance);
+      res.status(200)
+        .json({
+          status: 'success',
+          alliance: alliances
+        });
     })
     .catch((error) =>
-      res.send(error))
+      res.status(500)
+        .json({
+          status: 'Error',
+          message: error
+        })
+    )
 });
 router.get('/:id/users', function (req, res, next) {
   var id = parseInt(req.params.id);
   AllianceDAO.getUsersById(id)
     .then((alliance) => {
-      res.send(alliance);
+      // res.send(alliance);
+      res.status(200)
+        .json({
+          status: 'success',
+          users: alliance
+        });
     })
     .catch((error) =>
-      res.send(error))
+      res.status(500)
+        .json({
+          status: 'Error',
+          message: error
+        })
+    )
 });
 router.get('/:id/characters', function (req, res, next) {
   var id = parseInt(req.params.id);
   AllianceDAO.getCharactersById(id)
     .then((alliance) => {
-      res.send(alliance);
+     // res.send(alliance);
+       res.status(200)
+        .json({
+          status: 'success',
+          characters: alliance
+        });
     })
     .catch((error) =>
-      res.send(error))
+      res.status(500)
+        .json({
+          status: 'Error',
+          message: error
+        })
+    )
 });
 
 router.get('/:id/characters/:class', function (req, res, next) {
   var id = parseInt(req.params.id);
   var chaclass = req.params.class;
-  var subclass = chaclass.substring(1, chaclass.length - 1);
-  AllianceDAO.getCharactersByIdAndClass(id, subclass)
+
+  AllianceDAO.getCharactersByIdAndClass(id, chaclass)
     .then((alliance) => {
-      res.send(alliance);
+     // res.send(alliance);
+     res.status(200)
+        .json({
+          status: 'success',
+          characters: alliance
+        });
     })
     .catch((error) =>
-      res.send(error))
+      res.status(500)
+        .json({
+          status: 'Error',
+          message: error
+        })
+    )
 });
 
 router.post('/', function (req, res, next) {
-  var alliancename = req.body.name;
+  var alliancename = req.body.alliance.name;
 
   if (alliancename === undefined) {
     res.status(422)
@@ -64,8 +111,8 @@ router.post('/', function (req, res, next) {
       res.status(200)
         .json({
           status: 'success',
-          message: 'Inserted one alliancename',
-          alliance: result
+          message: 'Inserted one alliance',
+          alliance: result[0]
         });
     })
 });
@@ -74,16 +121,17 @@ router.delete('/:id', function (req, res, next) {
   var id = parseInt(req.params.id);
   AllianceDAO.deleteById(id)
     .then((result) => {
+      // console.log(result);
       res.status(200).json({
         status: 'success',
-        message: 'Delete success'
+        message: result
       });
     })
 });
 
 router.put('/:id', function (req, res, next) {
   var id = parseInt(req.params.id);
-  var name = req.body.name;
+  var name = req.body.alliance.name;
   if (name === undefined) {
     res.status(422)
       .json({
@@ -96,7 +144,9 @@ router.put('/:id', function (req, res, next) {
       res.status(200)
         .json({
           status: 'success',
-          message: 'update success',
+          message: 'modified a alliance',
+          alliance: result[0]
+
         })
     })
 });
