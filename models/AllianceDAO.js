@@ -91,14 +91,6 @@ module.exports = {
 
     },
     updateById(id, name) {
-        /*DB.accessor.query(
-             'select * from alliances where id = ${allianceID}',
-             { allianceID: id }
-         )
-             .then((result) => {
-                 if (result.length === 0) {
-                     throw 'ALLIANCE NOT_FOUND';
-                 }*/
         return DB.accessor.query(
             'update alliances set name=${allianceName} where id=${allianceID}; select * from alliances where id=${allianceID}',
             {

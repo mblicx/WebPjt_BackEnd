@@ -9,32 +9,43 @@ router.get('/', function (req, res, next) {
     .then((users) => {
       //res.send(users);
       res.status(200)
-      .json({
-        users
-      })
-    })
+      .json({ 
+        status: 'success',
+        users:users
+      });
+    });
 });
 
 router.get('/:id', function (req, res, next) {
   var id = parseInt(req.params.id);
   UserDAO.getById(id)
-    .then((user) => {
-      res.send(user);
-    })
+    .then((users) => {
+      //res.send(user);
+      res.status(200)
+        .json({
+          status: 'success',
+          user: users
+        });
+    });
 });
 
 router.get('/:id/characters', function (req, res, next) {
   var id = parseInt(req.params.id);
   UserDAO.getCharacters(id)
-    .then((user) => {
-      res.send(user);
+    .then((users) => {
+      //res.send(user);
+      res.status(200)
+        .json({
+          status: 'success',
+          characters: users
+        });
     })
 });
 
 router.post('/', function (req, res, next) {
-  var username = req.body.username;
-  var email = req.body.email;
-  var alliance = req.body.alliance;
+  var username = req.body.user.name;
+  var email = req.body.user.email;
+  var alliance = req.body.user.alliance;
   if (username === undefined) {
     res.status(422)
       .json({
@@ -48,7 +59,7 @@ router.post('/', function (req, res, next) {
         .json({
           status: 'success',
           message: 'Inserted one user',
-          user : result
+          user: result
         })
     })
 });
@@ -60,16 +71,16 @@ var id = parseInt(req.params.id);
     .then((result) => {
       res.status(200).json({
         status: 'success',
-        message: 'Delete success'
+        message: result
       });
     })
 });
 
 router.put('/:id', function (req, res, next) {
   var id = parseInt(req.params.id);
-  var username = req.body.username;
-  var email = req.body.email;
-  var alliance = req.body.alliance;
+  var username = req.body.user.name;
+  var email = req.body.user.email;
+  var alliance = req.body.user.alliance_id;
   if (username === undefined) {
     res.status(422)
       .json({
@@ -82,9 +93,13 @@ router.put('/:id', function (req, res, next) {
       res.status(200)
         .json({
           status: 'success',
-          message: 'update success',
+          message: 'modified a user',
+          user: result[0]
         })
     })
 });
+
+
+
 
 module.exports = router;

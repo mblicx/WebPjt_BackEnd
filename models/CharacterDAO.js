@@ -71,7 +71,6 @@ module.exports = {
                     var lat2 = element.position.x;
                     var lng2 = element.position.y;
                     var dis = 6378.138 * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((lat1 * Math.PI / 180 - lat2 * Math.PI / 180) / 2), 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.pow(Math.sin((lng1 * Math.PI / 180 - lng2 * Math.PI / 180) / 2), 2))) * 1000;
-                    //console.log(dis);
                     element.distance = dis;
                     if (dis <= radius)
                         ennemies.push(element);
@@ -104,7 +103,6 @@ module.exports = {
             .then((result) => {
                 lat1 = result[0].position.x;
                 lng1 = result[0].position.y;
-                // console.log(x, y);
             })
             .catch((error) => {
                 throw error;
@@ -121,7 +119,6 @@ module.exports = {
                     var lat2 = element.position.x;
                     var lng2 = element.position.y;
                     var dis = 6378.138 * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((lat1 * Math.PI / 180 - lat2 * Math.PI / 180) / 2), 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.pow(Math.sin((lng1 * Math.PI / 180 - lng2 * Math.PI / 180) / 2), 2))) * 1000;
-                    //console.log(dis);
                     element.distance = dis;
                     if (dis <= radius)
                         alliances.push(element);
