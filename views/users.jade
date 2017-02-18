@@ -3,7 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  table
+
+  table(
+      border=1
+  )
     tr
         th ID
         th Name
@@ -11,7 +14,7 @@ block content
         th Alliance ID
     each item in ulist
         tr(
-            id=item.id
+            onclick="window.location.href=\"./users/#{item.id}\""
         )
             td #{item.id}
             td #{item.name}
