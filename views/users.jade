@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  table
+    tr
+        th ID
+        th Name
+        th Email
+        th Alliance ID
+    each item in ulist
+        tr
+            td #{item.id}
+            td #{item.name}
+            td #{item.email}
+            td #{item.alliance_id}

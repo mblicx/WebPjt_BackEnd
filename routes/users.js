@@ -8,6 +8,7 @@ router.get('/', function (req, res, next) {
   UserDAO.getAll()
     .then((users) => {
       //res.send(users);
+      userlist=users;
       res.status(200)
       .json({ 
         status: 'success',
