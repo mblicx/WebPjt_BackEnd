@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  table(
+      border=1
+  )
+    tr
+        th ID
+        th Name
+        th Class
+        th User_id(remplacé par name)
+        th Point
+    each item in clist
+        tr(
+             onclick="window.location.href=\"./characters/#{item.id}\""
+        )
+            td #{item.id}
+            td #{item.name}
+            td #{item.class}
+            td #{item.uname}
+            td (#{item.position.x},#{item.position.y})

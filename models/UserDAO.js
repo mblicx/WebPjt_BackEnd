@@ -15,6 +15,20 @@ module.exports = {
 
     },
 
+    getByIdForView(id) {
+        return DB.accessor.query(
+            'select users.id,users.name,users.email,alliances.name as aname from users cross join alliances where users.id = ${userID} and users.alliance_id = alliances.id',
+            { userID: id }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'USER NOT_FOUND';
+                }
+                return result[0]
+            })
+
+    },
+
     getAll() {
         return DB.accessor.query('select * from users')
             .then((result) => {
@@ -24,7 +38,15 @@ module.exports = {
                 throw error;
             })
     },
-
+    getAllForView() {
+        return DB.accessor.query('select users.id,users.name,users.email,alliances.name as aname from users cross join alliances where users.alliance_id = alliances.id')
+            .then((result) => {
+                return result;
+            })
+            .catch((error) => {
+                throw error;
+            })
+    },
     getCharacters(id) {
         return DB.accessor.query(
             'SELECT * from characters WHERE user_id = ${userID}',

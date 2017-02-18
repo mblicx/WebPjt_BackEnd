@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    li 
+        p Character ID: #{character.id}
+    li 
+        p Character Name: #{character.name}
+    li 
+        p Character Class: #{character.class}
+    li 
+        p User ID(remplacé par name): #{character.uname}
+    li 
+        p Character Position: (#{character.position.x},#{character.position.y})
+
+
+
+      

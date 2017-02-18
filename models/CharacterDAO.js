@@ -14,10 +14,31 @@ module.exports = {
                 return result[0]
             })
     },
+    getByIdForView(id) {
+        return DB.accessor.query(
+            'SELECT characters.*,users.name as uname FROM characters cross join users WHERE characters.id = ${userID} and users.id=characters.user_id',
+            { userID: id }
+        )
+            .then((result) => {
+                if (result.length === 0) {
+                    throw 'CHARACTER NOT_FOUND';
+                }
+                return result[0]
+            })
+    },
 
 
     getAll() {
         return DB.accessor.query('SELECT * FROM characters')
+            .then((result) => {
+                return result;
+            })
+            .catch((error) => {
+                throw error;
+            })
+    },
+     getAllForView() {
+        return DB.accessor.query('SELECT characters.*,users.name as uname FROM characters cross join users WHERE users.id=characters.user_id')
             .then((result) => {
                 return result;
             })

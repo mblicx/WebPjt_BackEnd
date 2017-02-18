@@ -9,13 +9,11 @@ block content
     tr
         th ID
         th Name
-        th Email
-        th Alliance ID(remplacé par name)
-    each item in ulist
+        
+    each item in alist
         tr(
-            onclick="window.location.href=\"./users/#{item.id}\""
+             onclick="window.location.href=\"./alliances/#{item.id}\""
         )
             td #{item.id}
             td #{item.name}
-            td #{item.email}
-            td #{item.aname}
+            
