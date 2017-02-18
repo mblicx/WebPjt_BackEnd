@@ -1,5 +1,5 @@
 # WebPjt_BackEnd  / Author: Shuopu LI et Shijun WANG
-<h2>This project include both front-end & back-end   </h2>
+<h2>This project includes both front-end & back-end   </h2>
 <a>Index of front end is:</a><http://localhost:3000/>
 <ul>
   <li>a. Back-end: API REST de base - 10 points<b>√</b></li>
