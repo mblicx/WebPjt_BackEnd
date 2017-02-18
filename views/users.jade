@@ -10,7 +10,9 @@ block content
         th Email
         th Alliance ID
     each item in ulist
-        tr
+        tr(
+            id=item.id
+        )
             td #{item.id}
             td #{item.name}
             td #{item.email}

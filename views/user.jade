@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    li 
+        p User ID: #{user.id}
+    li 
+        p User Name: #{user.name}
+    li 
+        p User Email Address: #{user.email}
+    li 
+        p Alliance ID: #{user.alliance_id}
