@@ -1,7 +1,7 @@
 # WebPjt_BackEnd
-<p>back-end & front-end </p>
-This project include both front-end and back-end
-<p>index of front end is:[localhost:3000](localhost:3000 "index")</p>
+<h2>This project include both front-end & back-end   </h2>
+
+<a>Index of front end is:</a><http://localhost:3000/>
 <ul>
   <li>a. Back-end: API REST de base - 10 points<b>√</b></li>
   <li>b. Back-end: Routes « avancées » - 10 points<b>√</b></li>
